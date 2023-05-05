@@ -1,4 +1,5 @@
 ### Welcome to MaxxChain Community support docs 
 
-Table of Content    
-[- Setup Node](/node-setup.md)
+Table of Content
+   
+- [Setup Node](/node-setup.md)
