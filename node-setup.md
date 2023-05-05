@@ -1,7 +1,5 @@
 # MaxxChain Node Setup
 
-Basic Instructions to start a new node on Ubuntu Distro. Based on your OS and environment, you may need to make changes.
-
 These instructions are for Ubuntu 18,20,22
 
 ## User Creation 
@@ -19,8 +17,15 @@ usermod -aG sudo ubuntu
 Try not to use root to install. Use ubuntu user to continue with steps below.
 
 ## Default Ports
+Allow ports 30303, 8545 on firewall with the following command    
 
-Open ports 30303, 8545 
+#### 🚨 Security Alert 🚨    
+If you are mining do not open port (8545)
+
+```bash
+ufw allow 30303
+ufw allow 8545
+```   
 
 ## Pre-Requisites
 
@@ -32,8 +37,6 @@ you can switch user using commands below
 su ubuntu
 cd ~
 ```
-
-
 
 ## Install Go Lang: 
 
@@ -53,12 +56,17 @@ export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 ## Clone Repo
 
 ```bash
+cd ~
 git clone https://github.com/maxxchain/go-ethereum
-ls -la
 cd go-ethereum/
 sudo apt-get update && sudo apt-get dist-upgrade -y
 sudo apt-get install build-essential make git screen unzip curl nginx pkg-config nmap xterm screen tcl -y
 make geth
+```
+
+### Add geth to path (optional)
+```bash
+export PATH=/root/go-ethereum/build/bin:$PATH"
 ```
 
 ## Genesis Block
@@ -69,22 +77,34 @@ make geth
 git clone https://github.com/maxxchain/genesis-block
 ```
 
-- Change directory to go-ethereum 
-
+## Run the following command to initialize geth with MaxxChain genesis block
 ```bash
-cd go-ethereum/
+cd genesis-block
+```
+#### For MaxxChain Testnet 
+```bash
+geth init /path/to/genesis-block/testnet.json
 ```
 
-- Run the following command to initialize geth with MaxxChain genesis block
-
+#### For MaxxChain Mainnet 
 ```bash
-./build/bin/geth init /path/to/genesis-block/mainnet.json
+geth init /path/to/genesis-block/mainnet.json
 ```
 
-- Start Geth and Node Sync
+## Start Geth and Node Sync
+
 ```bash
-./build/bin/geth --networkid 10201 --port 30303 --http --http.port 8545 --http.addr 0.0.0.0 --http.api personal,eth,net --http.corsdomain '*' --syncmode full
+geth --networkid 10201 --port 30303 --http --http.port 8545 --http.addr 0.0.0.0 --http.api personal,eth,net --http.corsdomain '*' --syncmode full
 ```
+
+### MaxxxChain Mainnet vs Testnet 
+Mainnet chain id = 10201
+Testnet chain id = 10203
+
+#### Important note
+Make sure to replace the --networkid 10201 with the appropiate chain id depending if you want
+to run the MaxxChain mainnet or the testnet.    
+
 
 ## Connect to geth console to add seed peers
 
@@ -95,13 +115,19 @@ git clone https://github.com/maxxchain/bootnodes && cd bootnodes
 - Give permission to the executable bash file
 
 ```bash
-sudo chmod 755 init.sh
+sudo chmod 755 mainnet-init.sh
+sudo chmod 755 testnet-init.sh
 ```
 
-- Run the command and it will automatically install all seed peers on your geth and you are ready to go
-
+- Run the command to install community defined MaxxChain peers onto your geth
+### If you are running MaxxChain mainnet 
 ```bash
-./init.sh
+./mainnet-init.sh
+```    
+    
+### If you are running MaxxChain testnet 
+```bash
+./testnet-init.sh
 ```
 
 Congratulations you have your geth full node up and running.
