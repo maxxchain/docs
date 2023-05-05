@@ -1,1 +1,1 @@
-### Welcome to MaxxChain Community Dev support docs 
+### Welcome to MaxxChain Community support docs 
