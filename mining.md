@@ -84,15 +84,22 @@ geth --datadir data init /path/to/genesis-block/testnet.json
 geth --datadir data init /path/to/genesis-block/mainnet.json
 ```
 
-### Start Geth Node Mining
+### Create account for mining rewards
 
 ```bash
-geth --networkid 10201 --datadir data --mine --miner.threads=1 --miner.etherbase=0x3784d4d687806e031487a3ef4c48c7893016e9e7
+geth account new
 ```
 
-### Chain Id's for MaxxxChain Mainnet and Testnet 
-- Mainnet = 10201
-- Testnet = 10203
+Enter a strong password and save the generated address, which will be used to receive mining rewards.
+
+
+### Start the geth client with the --mine flag to enable mining and --miner.etherbase flag to set the mining reward address. Replace <your_reward_address> with the address generated in the previous step:
+
+```bash
+geth --networkid 10201 --datadir data --syncmode full --mine --miner.etherbase=<your_reward_address>
+```
+
+Geth will start mining using your local machine's resources. You can also add the --miner.threads flag followed by a number to specify the number of CPU threads to use for mining. For example, --miner.threads=4 would use 4 threads.
 
 #### 🚨 Important note 🚨
 Make sure to replace the --networkid 10201 with the appropiate chain id depending if you want
