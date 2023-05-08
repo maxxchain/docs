@@ -1,6 +1,8 @@
-## MaxxChain Node Setup
+## Mining MaxxChain
 
-These instructions are for Ubuntu users, will work for version 18,20,22
+These instructions are for Ubuntu users, will work for version 18,20,22.
+Note that there are similarity in setting up a mining node and a regular node but some 
+minor change and precautions needs to be taken.
 
 ## Setup a user 
 
@@ -17,14 +19,14 @@ usermod -aG sudo ubuntu
 Try not to use root to install. Use ubuntu user to continue with steps below.
 
 ## Default Ports
-Allow ports 30303, 8545 on firewall with the following command    
+Allow ports 30303 on firewall with the following command
 
 #### 🚨 Security Alert 🚨    
-If you are mining do not open port (8545)
+Do not open port (8545)
 
 ```bash
-ufw allow 30303
-ufw allow 8545
+ufw allow 30303 // allows peers connect to you but not required if you don't want to publish your node address
+ufw deny 8545 // do this just to be sure the port is not left open
 ```   
 
 Switch to the ubuntu user we just created above
@@ -34,7 +36,7 @@ su ubuntu
 cd ~
 ```
 
-## Install Go Lang: 
+## Install Go Lang if you have not already done so: 
 
 #### 🚨 Make sure you are in /home/ubuntu folder 🚨
 
@@ -71,21 +73,21 @@ export PATH=/root/go-ethereum/build/bin:$PATH"
 git clone https://github.com/maxxchain/genesis-block && cd genesis-block
 ```
 
-#### If you want to run MaxxChain Testnet node use 👇
+#### If you want to mine MaxxChain Testnet use 👇
 
 ```bash
 geth --datadir data init /path/to/genesis-block/testnet.json
 ```
 
-#### If you will be running a MaxxChain Mainnet node use 👇
+#### If you will be mining MaxxChain Mainnet use 👇
 ```bash
 geth --datadir data init /path/to/genesis-block/mainnet.json
 ```
 
-### Start Geth and Node Sync
+### Start Geth Node Mining
 
 ```bash
-geth --networkid 10201 --datadir data --port 30303 --http --http.port 8545 --http.addr 0.0.0.0 --http.api personal,eth,net --http.corsdomain '*' --syncmode full
+geth --networkid 10201 --datadir data --mine --miner.threads=1 --miner.etherbase=0x3784d4d687806e031487a3ef4c48c7893016e9e7
 ```
 
 ### Chain Id's for MaxxxChain Mainnet and Testnet 
@@ -121,25 +123,5 @@ sudo chmod 755 testnet-init.sh
 ./testnet-init.sh
 ```
 
-Congratulations you have your geth full node up and running.    
+Congratulations you have your geth full node up and running.
 
-### If you wish to support the MaxxChain community by dedicating your node to the public to further allow other nodes connect with your node you can use the instruction below
-
-### Start Geth Node Using
-
-```bash
-geth --networkid 10201 --datadir data --port 30303 --http --http.port 8545 --http.addr 0.0.0.0 --http.api personal,eth,net --http.corsdomain '*' --syncmode full --nat extip:your_server_public_address
-```
-
-Where your_server_public_address is the ip address of your server that is publicly available
-
-### Make sure you are in the go-ethereum directory then run this command to get your node peer url 
-```bash
-geth attach --exec admin.nodeInfo.enode data/geth.ipc
-```
-
-### If that is successful you will see a long string starting with enode:// and ending with your server_ip:30303, share this string with the 
-MaxxChain team/Dev team and it will be included in our community peers list on our github 
-https://github.com/maxxchain/bootnodes/blob/main/mainnet-nodes.txt
-
-### Thank you for reading, if you have any issues setting this up you can ask more questions on the telegram and we will come to your rescue.
