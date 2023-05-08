@@ -96,7 +96,7 @@ Enter a strong password and save the generated address, which will be used to re
 ### Start the geth client with the --mine flag to enable mining and --miner.etherbase flag to set the mining reward address. Replace <your_reward_address> with the address generated in the previous step:
 
 ```bash
-geth --networkid 10201 --datadir data --syncmode full --mine --miner.etherbase=<your_reward_address>
+geth --networkid 10201 --datadir data --port 30303 --syncmode full --mine --miner.etherbase=<your_reward_address>
 ```
 
 Geth will start mining using your local machine's resources. You can also add the --miner.threads flag followed by a number to specify the number of CPU threads to use for mining. For example, --miner.threads=4 would use 4 threads.
