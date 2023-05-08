@@ -25,8 +25,8 @@ Allow ports 30303 on firewall with the following command
 Do not open port (8545)
 
 ```bash
-ufw allow 30303 // allows peers connect to you but not required if you don't want to publish your node address
-ufw deny 8545 // do this just to be sure the port is not left open
+ufw allow 30303 [//]: # allows peers connect to you but not required if you don't want to publish your node address
+ufw deny 8545 [//]: # do this just to be sure the port is not left open
 ```   
 
 Switch to the ubuntu user we just created above
