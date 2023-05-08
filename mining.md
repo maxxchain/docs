@@ -129,6 +129,3 @@ sudo chmod 755 testnet-init.sh
 ```bash
 ./testnet-init.sh
 ```
-
-Congratulations you have your geth full node up and running.
-
