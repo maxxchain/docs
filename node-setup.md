@@ -62,7 +62,7 @@ make geth
 
 ### Add geth to path (optional)
 ```bash
-export PATH=/root/go-ethereum/build/bin:$PATH"
+export PATH=/root/go-ethereum/build/bin:$PATH
 ```
 
 ### Setup genesis Block
